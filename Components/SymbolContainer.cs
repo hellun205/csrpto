@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Linq;
+using csrpto.Core.Symbols;
 
 namespace csrpto.Components
 {
@@ -63,7 +64,7 @@ namespace csrpto.Components
 
     public const int SpacingSize = 20;
 
-    public List<SymbolBase> Symbols = new List<SymbolBase>();
+    public List<ISymbol> Symbols = new List<ISymbol>();
 
     public SymbolContainer()
     {
@@ -75,7 +76,7 @@ namespace csrpto.Components
       foreach (var symbol in Symbols)
         symbol.OnPaint(e);
     }
-    public void AddSymbol(SymbolBase symbol, int line = -1)
+    public void AddSymbol(ISymbol symbol, int line = -1)
     {
       symbol.OnValidate += Invalidate;
 
@@ -119,6 +120,12 @@ namespace csrpto.Components
       });
     }
 
+    private void SymbolContainer_DoubleClick(object sender, System.EventArgs e)
+    {
+      var symbol = Symbols.SingleOrDefault(x => x.CheckBounds((e as MouseEventArgs).Location));
+      symbol?.OnEdit();
+    }
+
     public void RefreshViewPoint(int index = -1)
     {
       if (Symbols.Count == 0)
@@ -127,7 +134,7 @@ namespace csrpto.Components
         return;
       }
 
-      SymbolBase s;
+      ISymbol s;
       if (index == -1)
       {
         var selectedSymbol = Symbols.SingleOrDefault(x => x.IsSelected);

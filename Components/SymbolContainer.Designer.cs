@@ -40,6 +40,7 @@ namespace csrpto.Components
       this.Size = new System.Drawing.Size(508, 484);
       this.Load += new System.EventHandler(this.SymbolContainer_Load);
       this.Paint += new System.Windows.Forms.PaintEventHandler(this.SymbolContainer_Paint);
+      this.DoubleClick += new System.EventHandler(this.SymbolContainer_DoubleClick);
       this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.SymbolContainer_MouseDown);
       this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.SymbolContainer_MouseMove);
       this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.SymbolContainer_MouseUp);

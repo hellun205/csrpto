@@ -1,17 +1,22 @@
-﻿using System;
+﻿using csrpto.Components;
+using csrpto.Forms;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
 namespace csrpto.Core
 {
-  public abstract class SymbolBase
+  public abstract class SymbolBase<TVEC, TValue> : ISymbol
+    where TVEC : SymbolVEC<TValue>, new()
+    where TValue : struct, ISymbolValue
   {
     #region Properties
     private Point _viewPoint;
     public Point ViewPoint
     {
       get => _viewPoint;
-      set {
+      set
+      {
         _viewPoint = value;
         VisualChanged();
       }
@@ -107,11 +112,26 @@ namespace csrpto.Core
     }
 
     public abstract string Text { get; }
+
     protected Pen BorderPen => new Pen(BorderColor, BorderSize);
+
+    private TValue _value;
+    protected TValue Value
+    {
+      get => _value;
+      set
+      {
+        _value = value;
+        VisualChanged();
+      }
+    }
+
+    protected abstract string Descriptions { get; }
+    
 
     #endregion
 
-    #region Const
+      #region Const
     public static readonly Color SelectedColor = Color.Blue;
     public static readonly Color ExecutedColor = Color.Yellow;
     public static readonly Color NormalColor = Color.Black;
@@ -129,13 +149,13 @@ namespace csrpto.Core
       OnPaintText(e);
     }
 
-    public virtual void OnPaintBorder(PaintEventArgs e)
+    protected virtual void OnPaintBorder(PaintEventArgs e)
     {
       var rect = new Rectangle(Position.X, Position.Y, Size.Width, Size.Height);
       e.Graphics.DrawRectangle(BorderPen, rect);
     }
 
-    public virtual void OnPaintText(PaintEventArgs e)
+    protected virtual void OnPaintText(PaintEventArgs e)
     {
       var rect = new Rectangle(Position.X, Position.Y, Size.Width, Size.Height);
       var sf = new StringFormat()
@@ -170,6 +190,19 @@ namespace csrpto.Core
         BorderColor = IsSelected ? SelectedColor : NormalColor;
 
       OnValidate?.Invoke();
+    }
+
+    public void OnEdit()
+    {
+      var form = new SymbolEditForm<TVEC, TValue>()
+      {
+        Descriptions = Descriptions
+      };
+      form.OnConfirm += (v) =>
+      {
+        Value = v;
+      };
+      form.ShowDialog();
     }
 
     public bool CheckBounds(Point position)

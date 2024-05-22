@@ -46,27 +46,58 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\ISymbolVEC.cs" />
+    <Compile Include="Components\SymbolContainer1.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\SymbolContainer1.Designer.cs">
+      <DependentUpon>SymbolContainer1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Components\SymbolContainer.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Components\SymbolContainer.Designer.cs">
       <DependentUpon>SymbolContainer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Components\Symbols\TestSymbolVEC.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\Symbols\TestSymbolVEC.Designer.cs">
+      <DependentUpon>TestSymbolVEC.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\SymbolVEC.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Core\ISymbol.cs" />
+    <Compile Include="Core\ISymbolValue.cs" />
     <Compile Include="Core\SymbolBase.cs" />
-    <Compile Include="Core\TestSymbol.cs" />
+    <Compile Include="Core\Symbols\TestSymbolValue.cs" />
+    <Compile Include="Core\Symbols\TestSymbol.cs" />
     <Compile Include="Forms\Main.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\SymbolEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SymbolEditForm.Designer.cs">
+      <DependentUpon>SymbolEditForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Components\SymbolContainer1.resx">
+      <DependentUpon>SymbolContainer1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Components\SymbolContainer.resx">
       <DependentUpon>SymbolContainer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SymbolEditForm.resx">
+      <DependentUpon>SymbolEditForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -90,5 +121,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
